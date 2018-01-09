@@ -9,7 +9,7 @@ export default class SearchBar extends Component {
     // and is blank string so its an empty input onload
     this.state = { term: '' };
 
-    // bind with this lets the inputChange know which
+    // bind with 'this' lets the inputChange know which
     // 'this' to refer to. At this level,'this' refers
     // to the instance of SearchBar, so we are saying
     // anywhere below where we refer to this.onInputChange
@@ -18,6 +18,8 @@ export default class SearchBar extends Component {
     this.onInputChange = this.onInputChange.bind(this);
   }
 
+
+  // function for when user types into input field
   onInputChange(event) {
     console.log(event.target.value);
     // need to setState to update the input form when
@@ -25,10 +27,20 @@ export default class SearchBar extends Component {
     this.setState({ term: event.target.value });
   }
 
+
+  // function that tells browser not to submit
+  // the form by default. when user clicks Submit
+  // button, this fn will be triggered
+  onFormSubmit(event) {
+    event.preventDefault();
+
+    // we need to fetch weather data here
+  }
+
   render() {
     return (
       //className 'input-group' is bootstrap class; nothing special
-      <form className="input-group">
+      <form onSubmit= {this.onFormSubmit} className="input-group">
         <input
           placeholder="Get a 5 day forecase in your favorite cities"
           className="form-control"
