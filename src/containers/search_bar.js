@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { fetchWeather } from '../actions/index';
 
-export default class SearchBar extends Component {
+class SearchBar extends Component {
   constructor(props) {
     super(props);
 
@@ -16,10 +19,12 @@ export default class SearchBar extends Component {
     // replace that value with SearchBar instance of this
     // by binding it
     this.onInputChange = this.onInputChange.bind(this);
+    this.onFormSubmit = this.onFormSubmit.bind(this);
   }
 
 
-  // function for when user types into input field
+  // function for when user types into input field; onInputChange
+  // is regular vanilla JS fn that takes in event as a param
   onInputChange(event) {
     console.log(event.target.value);
     // need to setState to update the input form when
@@ -28,13 +33,22 @@ export default class SearchBar extends Component {
   }
 
 
-  // function that tells browser not to submit
-  // the form by default. when user clicks Submit
-  // button, this fn will be triggered
-  onFormSubmit(event) {
-    event.preventDefault();
 
+  onFormSubmit(event) {
+    // tells browser not to submit
+    // the form by default. when user clicks Submit
+    // button, this fn will be triggered
+    event.preventDefault();
     // we need to fetch weather data here
+    // 'this' refers to the SearchBar context of 'this' b/c
+    // we bound it above with the bind(this). then we call
+    // our fetchWeather container to talk to the api, and
+    // we pass it what the user will type into the search
+    // input which is this.state.term
+    this.props.fetchWeather(this.state.term);
+    // we clear out the search input after user clicks 
+    // submit
+    this.setState({ term: '' });
   }
 
   render() {
@@ -53,3 +67,9 @@ export default class SearchBar extends Component {
     );
   }
 }
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ fetchWeather }, dispatch);
+}
+
+export default connect(null, mapDispatchToProps)(SearchBar);
