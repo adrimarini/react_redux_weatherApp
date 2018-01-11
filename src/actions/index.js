@@ -7,10 +7,18 @@ export const FETCH_WEATHER = 'FETCH_WEATHER';
 
 export function fetchWeather(city) {
   const url = `${ROOT_URL}&q=${city},us`;
+  // const request is axios returning a promise
+  // a promise doesnt actually contain any of our data
   const request = axios.get(url);
+
+  console.log('Request:', request);
 
   return {
     type: FETCH_WEATHER,
+    // this payload key is returning the promise
+    // from const request above
     payload: request
+    // redux-promise will unwrap the payload for us and
+    // return data 
   };
 }
