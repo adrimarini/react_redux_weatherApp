@@ -1,19 +1,28 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Sparklines, SparklinesLine } from 'react-sparklines';
 
 class WeatherList extends Component {
   // the param cityData is a particular obj in weather array
   // (redux state) that contains a cities data (can call whatevr we want but this makes clear)
   renderWeather(cityData){
+    const temps = cityData.list.map(weather => weather.main.temp);
+    console.log(temps);
+
     return (
       <tr key={cityData.city.name}>
         <td>{cityData.city.name}</td>
+        <td>
+          <Sparklines height={120} width={180} data={temps}>
+            <SparklinesLine color="red" />
+          </Sparklines>
+        </td>
       </tr>
     )
   }
-  // line 9: whenever we have a list we need to provide a unique 'key' property
+  // line 13: whenever we have a list we need to provide a unique 'key' property
   // the 'key' just needs to be a unique piece of data
-  // line 10: cityData points to one object in the 'weather' array
+  // line 14: cityData points to one object in the 'weather' array
   // and we drill down into the object to get what we need to display
 
   render () {
@@ -35,7 +44,7 @@ class WeatherList extends Component {
   }
 }
 
-// line 31: curly brace { this.props.weather.map(this.renderWeather) }
+// line 40: curly brace { this.props.weather.map(this.renderWeather) }
 // allows access to a javascript variable
 // 'weather' is the array of objects in Redux State so
 // mapping over the array will get 1 city per row
