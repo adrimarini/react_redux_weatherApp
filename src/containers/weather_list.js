@@ -13,16 +13,17 @@ class WeatherList extends Component {
     return (
       <tr key={cityData.city.name}>
         <td>{cityData.city.name}</td>
-        <td><Chart data={temps} color='orange' /></td>
-        <td><Chart data={pressures} color='red' /></td>
-        <td><Chart data={humidities} color='black' /></td>
+        <td><Chart data={temps} color='orange' units="K" /></td>
+        <td><Chart data={pressures} color='red' units="hPa" /></td>
+        <td><Chart data={humidities} color='black' units="%" /></td>
       </tr>
     )
   }
-  // line 13: whenever we have a list we need to provide a unique 'key' property
+  // line 14: whenever we have a list we need to provide a unique 'key' property
   // the 'key' just needs to be a unique piece of data
-  // line 14: cityData points to one object in the 'weather' array
+  // line 15: cityData points to one object in the 'weather' array
   // and we drill down into the object to get what we need to display
+  // which is name and so on for temp and the rest.
 
   render () {
     return (
