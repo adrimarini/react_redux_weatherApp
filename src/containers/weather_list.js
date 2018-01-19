@@ -7,14 +7,15 @@ class WeatherList extends Component {
   // (redux state) that contains a cities data (can call whatevr we want but this makes clear)
   renderWeather(cityData){
     const temps = cityData.list.map(weather => weather.main.temp);
-    console.log(temps);
+    const pressures = cityData.list.map(weather => weather.main.pressure);
+    const humidities = cityData.list.map(weather => weather.main.humidity);
 
     return (
       <tr key={cityData.city.name}>
         <td>{cityData.city.name}</td>
-        <td>
-          <Chart data={temps} color='orange' />
-        </td>
+        <td><Chart data={temps} color='orange' /></td>
+        <td><Chart data={pressures} color='red' /></td>
+        <td><Chart data={humidities} color='black' /></td>
       </tr>
     )
   }
